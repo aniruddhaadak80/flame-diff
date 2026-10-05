@@ -28,7 +28,7 @@
     "apps/web"
   ],
   "scripts": {
-    "prepare": "prettier --write .",
+    "postinstall": "husky || true",
     "build": "turbo run build",
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
