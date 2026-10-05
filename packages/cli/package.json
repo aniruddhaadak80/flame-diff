@@ -1,0 +1,41 @@
+{
+  "name": "@flamediff/cli",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "bin": {
+    "flame-diff": "./dist/bin.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\""
+  },
+  "dependencies": {
+    "commander": "^14.0.0",
+    "@flamediff/core": "0.1.0",
+    "@flamediff/skills": "0.1.0",
+    "@flamediff/plugins": "0.1.0",
+    "@flamediff/engine-client": "0.1.0",
+    "@flamediff/mcp": "0.1.0",
+    "@flamediff/tracekit": "0.1.0"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "typescript": "~5.9.3",
+    "vitest": "^3.2.4"
+  }
+}

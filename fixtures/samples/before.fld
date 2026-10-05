@@ -1,0 +1,17 @@
+FLDC1
+trace "checkout-8f2a"
+label "before - release 4.2.0"
+spans 18
+columns 6
+span_id str 18
+"s00"	"s01"	"s02"	"s03"	"s04"	"s05"	"s06"	"s07"	"s08"	"s09"	"s10"	"s11"	"s12"	"s13"	"s14"	"s15"	"s16"	"s17"
+parent_id str 18
+""	"s00"	"s01"	"s01"	"s00"	"s04"	"s04"	"s06"	"s06"	"s04"	"s00"	"s10"	"s11"	"s11"	"s11"	"s00"	"s15"	"s15"
+name str 18
+"http.handle"	"auth.verify"	"jwt.decode"	"session.load"	"cart.load"	"cache.get"	"db.query.items"	"db.pool.acquire"	"row.decode"	"tax.calculate"	"payment.authorize"	"http.post.gateway"	"tls.handshake"	"gateway.sign"	"gateway.forward"	"receipt.write"	"queue.publish"	"db.insert"
+start_ns u64 18
+0	1100	1400	1900	5800	6000	6600	6700	7100	18700	24600	24900	25100	37900	38700	121200	121500	127800
+dur_ns u64 18
+214600	4200	310	2600	18400	420	11900	240	2100	3800	96300	84100	12400	640	69800	8900	6100	1900
+depth u64 18
+0	1	2	2	1	2	2	3	3	2	1	2	3	3	3	1	2	2

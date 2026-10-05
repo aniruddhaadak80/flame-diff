@@ -1,0 +1,11 @@
+{
+  "name": "regression-budget",
+  "version": "1.0.0",
+  "description": "Treats a slowdown as a regression only past a per-capability budget, because one global ratio mislabels cheap spans and expensive ones alike.",
+  "enabled": true,
+  "priority": 70,
+  "capabilities": ["classification.regression-budget"],
+  "engines": {
+    "@flamediff/tracekit": "0.1.0"
+  }
+}

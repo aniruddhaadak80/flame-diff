@@ -1,0 +1,298 @@
+// GENERATED FILE - do not edit.
+//
+// Produced by `python scripts/gen-samples.py` from `fixtures/samples/*.json`, which is the
+// readable source of truth. The web app imports this instead of reading the filesystem,
+// because a serverless function cannot read a path it did not trace at build time.
+//
+// Regenerate after editing any sample JSON.
+// `services/engine/tests/test_generated.py` fails if this file drifts from its sources.
+
+export const AFTER_TRACE = {
+  trace_id: 'checkout-8f2a',
+  label: 'after - release 4.3.0',
+  spans: [
+    {
+      span_id: 's00',
+      parent_id: null,
+      name: 'http.handle',
+      start_ns: 0,
+      dur_ns: 268400,
+    },
+    {
+      span_id: 's01',
+      parent_id: 's00',
+      name: 'auth.verify',
+      start_ns: 1100,
+      dur_ns: 4200,
+    },
+    {
+      span_id: 's02',
+      parent_id: 's01',
+      name: 'jwt.decode',
+      start_ns: 1400,
+      dur_ns: 310,
+    },
+    {
+      span_id: 's03',
+      parent_id: 's01',
+      name: 'session.load',
+      start_ns: 1900,
+      dur_ns: 2600,
+    },
+    {
+      span_id: 's04',
+      parent_id: 's00',
+      name: 'cart.load',
+      start_ns: 5800,
+      dur_ns: 18400,
+    },
+    {
+      span_id: 's05',
+      parent_id: 's04',
+      name: 'cache.get',
+      start_ns: 6000,
+      dur_ns: 390,
+    },
+    {
+      span_id: 's06',
+      parent_id: 's04',
+      name: 'db.query.items',
+      start_ns: 6600,
+      dur_ns: 11900,
+    },
+    {
+      span_id: 's07',
+      parent_id: 's06',
+      name: 'db.pool.acquire',
+      start_ns: 6700,
+      dur_ns: 250,
+    },
+    {
+      span_id: 's08',
+      parent_id: 's06',
+      name: 'row.decode',
+      start_ns: 7100,
+      dur_ns: 2100,
+    },
+    {
+      span_id: 's09',
+      parent_id: 's04',
+      name: 'tax.calculate.v2',
+      start_ns: 18700,
+      dur_ns: 11600,
+    },
+    {
+      span_id: 's18',
+      parent_id: 's09',
+      name: 'rules.load',
+      start_ns: 19000,
+      dur_ns: 7400,
+    },
+    {
+      span_id: 's10',
+      parent_id: 's00',
+      name: 'payment.authorize',
+      start_ns: 24600,
+      dur_ns: 96300,
+    },
+    {
+      span_id: 's11',
+      parent_id: 's10',
+      name: 'http.post.gateway',
+      start_ns: 24900,
+      dur_ns: 84100,
+    },
+    {
+      span_id: 's12',
+      parent_id: 's11',
+      name: 'tls.handshake',
+      start_ns: 25100,
+      dur_ns: 12400,
+    },
+    {
+      span_id: 's13',
+      parent_id: 's11',
+      name: 'gateway.sign',
+      start_ns: 37900,
+      dur_ns: 640,
+    },
+    {
+      span_id: 's14',
+      parent_id: 's11',
+      name: 'gateway.forward',
+      start_ns: 38700,
+      dur_ns: 69800,
+    },
+    {
+      span_id: 's15',
+      parent_id: 's00',
+      name: 'receipt.write',
+      start_ns: 121200,
+      dur_ns: 71500,
+    },
+    {
+      span_id: 's16',
+      parent_id: 's15',
+      name: 'queue.publish',
+      start_ns: 121500,
+      dur_ns: 6100,
+    },
+    {
+      span_id: 's17',
+      parent_id: 's15',
+      name: 'db.insert',
+      start_ns: 127800,
+      dur_ns: 62400,
+    },
+    {
+      span_id: 's19',
+      parent_id: 's17',
+      name: 'wal.flush',
+      start_ns: 128000,
+      dur_ns: 60100,
+    },
+  ],
+} as const
+
+export const BEFORE_TRACE = {
+  trace_id: 'checkout-8f2a',
+  label: 'before - release 4.2.0',
+  spans: [
+    {
+      span_id: 's00',
+      parent_id: null,
+      name: 'http.handle',
+      start_ns: 0,
+      dur_ns: 214600,
+    },
+    {
+      span_id: 's01',
+      parent_id: 's00',
+      name: 'auth.verify',
+      start_ns: 1100,
+      dur_ns: 4200,
+    },
+    {
+      span_id: 's02',
+      parent_id: 's01',
+      name: 'jwt.decode',
+      start_ns: 1400,
+      dur_ns: 310,
+    },
+    {
+      span_id: 's03',
+      parent_id: 's01',
+      name: 'session.load',
+      start_ns: 1900,
+      dur_ns: 2600,
+    },
+    {
+      span_id: 's04',
+      parent_id: 's00',
+      name: 'cart.load',
+      start_ns: 5800,
+      dur_ns: 18400,
+    },
+    {
+      span_id: 's05',
+      parent_id: 's04',
+      name: 'cache.get',
+      start_ns: 6000,
+      dur_ns: 420,
+    },
+    {
+      span_id: 's06',
+      parent_id: 's04',
+      name: 'db.query.items',
+      start_ns: 6600,
+      dur_ns: 11900,
+    },
+    {
+      span_id: 's07',
+      parent_id: 's06',
+      name: 'db.pool.acquire',
+      start_ns: 6700,
+      dur_ns: 240,
+    },
+    {
+      span_id: 's08',
+      parent_id: 's06',
+      name: 'row.decode',
+      start_ns: 7100,
+      dur_ns: 2100,
+    },
+    {
+      span_id: 's09',
+      parent_id: 's04',
+      name: 'tax.calculate',
+      start_ns: 18700,
+      dur_ns: 3800,
+    },
+    {
+      span_id: 's10',
+      parent_id: 's00',
+      name: 'payment.authorize',
+      start_ns: 24600,
+      dur_ns: 96300,
+    },
+    {
+      span_id: 's11',
+      parent_id: 's10',
+      name: 'http.post.gateway',
+      start_ns: 24900,
+      dur_ns: 84100,
+    },
+    {
+      span_id: 's12',
+      parent_id: 's11',
+      name: 'tls.handshake',
+      start_ns: 25100,
+      dur_ns: 12400,
+    },
+    {
+      span_id: 's13',
+      parent_id: 's11',
+      name: 'gateway.sign',
+      start_ns: 37900,
+      dur_ns: 640,
+    },
+    {
+      span_id: 's14',
+      parent_id: 's11',
+      name: 'gateway.forward',
+      start_ns: 38700,
+      dur_ns: 69800,
+    },
+    {
+      span_id: 's15',
+      parent_id: 's00',
+      name: 'receipt.write',
+      start_ns: 121200,
+      dur_ns: 8900,
+    },
+    {
+      span_id: 's16',
+      parent_id: 's15',
+      name: 'queue.publish',
+      start_ns: 121500,
+      dur_ns: 6100,
+    },
+    {
+      span_id: 's17',
+      parent_id: 's15',
+      name: 'db.insert',
+      start_ns: 127800,
+      dur_ns: 1900,
+    },
+  ],
+} as const
+
+/** Every bundled recording, keyed by the id used in the compare form. */
+export const SAMPLE_TRACES = {
+  after: AFTER_TRACE,
+  before: BEFORE_TRACE,
+} as const
+
+export type SampleId = keyof typeof SAMPLE_TRACES
+
+export const SAMPLE_IDS = Object.keys(SAMPLE_TRACES) as readonly SampleId[]

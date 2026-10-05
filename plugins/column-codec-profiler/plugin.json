@@ -1,0 +1,11 @@
+{
+  "name": "column-codec-profiler",
+  "version": "1.0.0",
+  "description": "Adds a byte-accounting column to the columnar store, because a recording's size per attribute is worth knowing before choosing what to keep.",
+  "enabled": true,
+  "priority": 40,
+  "capabilities": ["column.encoding-costs"],
+  "engines": {
+    "@flamediff/tracekit": "0.1.0"
+  }
+}

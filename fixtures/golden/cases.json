@@ -1,0 +1,3039 @@
+{
+  "version": 1,
+  "generatedBy": "services/engine/tools/gen_golden.py",
+  "note": "Asserted by BOTH services/engine/tests/test_golden.py (the reference) and packages/tracekit/src/golden.test.ts (the TypeScript port). A change here is a change to the product's observable behaviour, not a formatting fix.",
+  "cases": [
+    {
+      "name": "rename-regression-and-addition",
+      "input": {
+        "base": {
+          "trace_id": "run-a",
+          "label": "before deploy",
+          "spans": [
+            {
+              "span_id": "root",
+              "parent_id": null,
+              "name": "http.handle",
+              "start_ns": 0,
+              "dur_ns": 12000
+            },
+            {
+              "span_id": "auth",
+              "parent_id": "root",
+              "name": "auth.verify",
+              "start_ns": 120,
+              "dur_ns": 900
+            },
+            {
+              "span_id": "query",
+              "parent_id": "root",
+              "name": "db.query",
+              "start_ns": 1100,
+              "dur_ns": 3000
+            },
+            {
+              "span_id": "cache",
+              "parent_id": "root",
+              "name": "cache.get",
+              "start_ns": 4200,
+              "dur_ns": 240
+            },
+            {
+              "span_id": "render",
+              "parent_id": "root",
+              "name": "view.render",
+              "start_ns": 4600,
+              "dur_ns": 6800
+            }
+          ]
+        },
+        "head": {
+          "trace_id": "run-a",
+          "label": "after deploy",
+          "spans": [
+            {
+              "span_id": "root",
+              "parent_id": null,
+              "name": "http.handle",
+              "start_ns": 0,
+              "dur_ns": 14500
+            },
+            {
+              "span_id": "auth",
+              "parent_id": "root",
+              "name": "auth.verify",
+              "start_ns": 120,
+              "dur_ns": 950
+            },
+            {
+              "span_id": "query",
+              "parent_id": "root",
+              "name": "db.query",
+              "start_ns": 1100,
+              "dur_ns": 6400
+            },
+            {
+              "span_id": "cache",
+              "parent_id": "root",
+              "name": "cache.get.v2",
+              "start_ns": 7600,
+              "dur_ns": 90
+            },
+            {
+              "span_id": "retry",
+              "parent_id": "root",
+              "name": "db.retry",
+              "start_ns": 7700,
+              "dur_ns": 310
+            },
+            {
+              "span_id": "render",
+              "parent_id": "root",
+              "name": "view.render",
+              "start_ns": 8000,
+              "dur_ns": 6200
+            }
+          ]
+        }
+      },
+      "expected": {
+        "canonical": {
+          "base": "(trace \"run-a\" \"before deploy\" 5)\n(span \"root\" \"http.handle\" 0 12000\n  (span \"auth\" \"auth.verify\" 120 900\n  )\n  (span \"query\" \"db.query\" 1100 3000\n  )\n  (span \"cache\" \"cache.get\" 4200 240\n  )\n  (span \"render\" \"view.render\" 4600 6800\n  )\n)\n)",
+          "head": "(trace \"run-a\" \"after deploy\" 6)\n(span \"root\" \"http.handle\" 0 14500\n  (span \"auth\" \"auth.verify\" 120 950\n  )\n  (span \"query\" \"db.query\" 1100 6400\n  )\n  (span \"cache\" \"cache.get.v2\" 7600 90\n  )\n  (span \"retry\" \"db.retry\" 7700 310\n  )\n  (span \"render\" \"view.render\" 8000 6200\n  )\n)\n)"
+        },
+        "tokens": {
+          "base": [
+            {
+              "kind": "lparen",
+              "text": "(",
+              "start": 0,
+              "end": 1
+            },
+            {
+              "kind": "sym",
+              "text": "trace",
+              "start": 1,
+              "end": 6
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 6,
+              "end": 7
+            },
+            {
+              "kind": "string",
+              "text": "\"run-a\"",
+              "start": 7,
+              "end": 14
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 14,
+              "end": 15
+            },
+            {
+              "kind": "string",
+              "text": "\"before deploy\"",
+              "start": 15,
+              "end": 30
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 30,
+              "end": 31
+            },
+            {
+              "kind": "number",
+              "text": "5",
+              "start": 31,
+              "end": 32
+            },
+            {
+              "kind": "rparen",
+              "text": ")",
+              "start": 32,
+              "end": 33
+            },
+            {
+              "kind": "ws",
+              "text": "\n",
+              "start": 33,
+              "end": 34
+            },
+            {
+              "kind": "lparen",
+              "text": "(",
+              "start": 34,
+              "end": 35
+            },
+            {
+              "kind": "sym",
+              "text": "span",
+              "start": 35,
+              "end": 39
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 39,
+              "end": 40
+            },
+            {
+              "kind": "string",
+              "text": "\"root\"",
+              "start": 40,
+              "end": 46
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 46,
+              "end": 47
+            },
+            {
+              "kind": "string",
+              "text": "\"http.handle\"",
+              "start": 47,
+              "end": 60
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 60,
+              "end": 61
+            },
+            {
+              "kind": "number",
+              "text": "0",
+              "start": 61,
+              "end": 62
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 62,
+              "end": 63
+            },
+            {
+              "kind": "number",
+              "text": "12000",
+              "start": 63,
+              "end": 68
+            },
+            {
+              "kind": "ws",
+              "text": "\n  ",
+              "start": 68,
+              "end": 71
+            },
+            {
+              "kind": "lparen",
+              "text": "(",
+              "start": 71,
+              "end": 72
+            },
+            {
+              "kind": "sym",
+              "text": "span",
+              "start": 72,
+              "end": 76
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 76,
+              "end": 77
+            },
+            {
+              "kind": "string",
+              "text": "\"auth\"",
+              "start": 77,
+              "end": 83
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 83,
+              "end": 84
+            },
+            {
+              "kind": "string",
+              "text": "\"auth.verify\"",
+              "start": 84,
+              "end": 97
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 97,
+              "end": 98
+            },
+            {
+              "kind": "number",
+              "text": "120",
+              "start": 98,
+              "end": 101
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 101,
+              "end": 102
+            },
+            {
+              "kind": "number",
+              "text": "900",
+              "start": 102,
+              "end": 105
+            },
+            {
+              "kind": "ws",
+              "text": "\n  ",
+              "start": 105,
+              "end": 108
+            },
+            {
+              "kind": "rparen",
+              "text": ")",
+              "start": 108,
+              "end": 109
+            },
+            {
+              "kind": "ws",
+              "text": "\n  ",
+              "start": 109,
+              "end": 112
+            },
+            {
+              "kind": "lparen",
+              "text": "(",
+              "start": 112,
+              "end": 113
+            },
+            {
+              "kind": "sym",
+              "text": "span",
+              "start": 113,
+              "end": 117
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 117,
+              "end": 118
+            },
+            {
+              "kind": "string",
+              "text": "\"query\"",
+              "start": 118,
+              "end": 125
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 125,
+              "end": 126
+            },
+            {
+              "kind": "string",
+              "text": "\"db.query\"",
+              "start": 126,
+              "end": 136
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 136,
+              "end": 137
+            },
+            {
+              "kind": "number",
+              "text": "1100",
+              "start": 137,
+              "end": 141
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 141,
+              "end": 142
+            },
+            {
+              "kind": "number",
+              "text": "3000",
+              "start": 142,
+              "end": 146
+            },
+            {
+              "kind": "ws",
+              "text": "\n  ",
+              "start": 146,
+              "end": 149
+            },
+            {
+              "kind": "rparen",
+              "text": ")",
+              "start": 149,
+              "end": 150
+            },
+            {
+              "kind": "ws",
+              "text": "\n  ",
+              "start": 150,
+              "end": 153
+            },
+            {
+              "kind": "lparen",
+              "text": "(",
+              "start": 153,
+              "end": 154
+            },
+            {
+              "kind": "sym",
+              "text": "span",
+              "start": 154,
+              "end": 158
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 158,
+              "end": 159
+            },
+            {
+              "kind": "string",
+              "text": "\"cache\"",
+              "start": 159,
+              "end": 166
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 166,
+              "end": 167
+            },
+            {
+              "kind": "string",
+              "text": "\"cache.get\"",
+              "start": 167,
+              "end": 178
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 178,
+              "end": 179
+            },
+            {
+              "kind": "number",
+              "text": "4200",
+              "start": 179,
+              "end": 183
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 183,
+              "end": 184
+            },
+            {
+              "kind": "number",
+              "text": "240",
+              "start": 184,
+              "end": 187
+            },
+            {
+              "kind": "ws",
+              "text": "\n  ",
+              "start": 187,
+              "end": 190
+            },
+            {
+              "kind": "rparen",
+              "text": ")",
+              "start": 190,
+              "end": 191
+            },
+            {
+              "kind": "ws",
+              "text": "\n  ",
+              "start": 191,
+              "end": 194
+            },
+            {
+              "kind": "lparen",
+              "text": "(",
+              "start": 194,
+              "end": 195
+            },
+            {
+              "kind": "sym",
+              "text": "span",
+              "start": 195,
+              "end": 199
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 199,
+              "end": 200
+            },
+            {
+              "kind": "string",
+              "text": "\"render\"",
+              "start": 200,
+              "end": 208
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 208,
+              "end": 209
+            },
+            {
+              "kind": "string",
+              "text": "\"view.render\"",
+              "start": 209,
+              "end": 222
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 222,
+              "end": 223
+            },
+            {
+              "kind": "number",
+              "text": "4600",
+              "start": 223,
+              "end": 227
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 227,
+              "end": 228
+            },
+            {
+              "kind": "number",
+              "text": "6800",
+              "start": 228,
+              "end": 232
+            },
+            {
+              "kind": "ws",
+              "text": "\n  ",
+              "start": 232,
+              "end": 235
+            },
+            {
+              "kind": "rparen",
+              "text": ")",
+              "start": 235,
+              "end": 236
+            },
+            {
+              "kind": "ws",
+              "text": "\n",
+              "start": 236,
+              "end": 237
+            },
+            {
+              "kind": "rparen",
+              "text": ")",
+              "start": 237,
+              "end": 238
+            },
+            {
+              "kind": "ws",
+              "text": "\n",
+              "start": 238,
+              "end": 239
+            },
+            {
+              "kind": "rparen",
+              "text": ")",
+              "start": 239,
+              "end": 240
+            }
+          ],
+          "head": [
+            {
+              "kind": "lparen",
+              "text": "(",
+              "start": 0,
+              "end": 1
+            },
+            {
+              "kind": "sym",
+              "text": "trace",
+              "start": 1,
+              "end": 6
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 6,
+              "end": 7
+            },
+            {
+              "kind": "string",
+              "text": "\"run-a\"",
+              "start": 7,
+              "end": 14
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 14,
+              "end": 15
+            },
+            {
+              "kind": "string",
+              "text": "\"after deploy\"",
+              "start": 15,
+              "end": 29
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 29,
+              "end": 30
+            },
+            {
+              "kind": "number",
+              "text": "6",
+              "start": 30,
+              "end": 31
+            },
+            {
+              "kind": "rparen",
+              "text": ")",
+              "start": 31,
+              "end": 32
+            },
+            {
+              "kind": "ws",
+              "text": "\n",
+              "start": 32,
+              "end": 33
+            },
+            {
+              "kind": "lparen",
+              "text": "(",
+              "start": 33,
+              "end": 34
+            },
+            {
+              "kind": "sym",
+              "text": "span",
+              "start": 34,
+              "end": 38
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 38,
+              "end": 39
+            },
+            {
+              "kind": "string",
+              "text": "\"root\"",
+              "start": 39,
+              "end": 45
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 45,
+              "end": 46
+            },
+            {
+              "kind": "string",
+              "text": "\"http.handle\"",
+              "start": 46,
+              "end": 59
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 59,
+              "end": 60
+            },
+            {
+              "kind": "number",
+              "text": "0",
+              "start": 60,
+              "end": 61
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 61,
+              "end": 62
+            },
+            {
+              "kind": "number",
+              "text": "14500",
+              "start": 62,
+              "end": 67
+            },
+            {
+              "kind": "ws",
+              "text": "\n  ",
+              "start": 67,
+              "end": 70
+            },
+            {
+              "kind": "lparen",
+              "text": "(",
+              "start": 70,
+              "end": 71
+            },
+            {
+              "kind": "sym",
+              "text": "span",
+              "start": 71,
+              "end": 75
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 75,
+              "end": 76
+            },
+            {
+              "kind": "string",
+              "text": "\"auth\"",
+              "start": 76,
+              "end": 82
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 82,
+              "end": 83
+            },
+            {
+              "kind": "string",
+              "text": "\"auth.verify\"",
+              "start": 83,
+              "end": 96
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 96,
+              "end": 97
+            },
+            {
+              "kind": "number",
+              "text": "120",
+              "start": 97,
+              "end": 100
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 100,
+              "end": 101
+            },
+            {
+              "kind": "number",
+              "text": "950",
+              "start": 101,
+              "end": 104
+            },
+            {
+              "kind": "ws",
+              "text": "\n  ",
+              "start": 104,
+              "end": 107
+            },
+            {
+              "kind": "rparen",
+              "text": ")",
+              "start": 107,
+              "end": 108
+            },
+            {
+              "kind": "ws",
+              "text": "\n  ",
+              "start": 108,
+              "end": 111
+            },
+            {
+              "kind": "lparen",
+              "text": "(",
+              "start": 111,
+              "end": 112
+            },
+            {
+              "kind": "sym",
+              "text": "span",
+              "start": 112,
+              "end": 116
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 116,
+              "end": 117
+            },
+            {
+              "kind": "string",
+              "text": "\"query\"",
+              "start": 117,
+              "end": 124
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 124,
+              "end": 125
+            },
+            {
+              "kind": "string",
+              "text": "\"db.query\"",
+              "start": 125,
+              "end": 135
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 135,
+              "end": 136
+            },
+            {
+              "kind": "number",
+              "text": "1100",
+              "start": 136,
+              "end": 140
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 140,
+              "end": 141
+            },
+            {
+              "kind": "number",
+              "text": "6400",
+              "start": 141,
+              "end": 145
+            },
+            {
+              "kind": "ws",
+              "text": "\n  ",
+              "start": 145,
+              "end": 148
+            },
+            {
+              "kind": "rparen",
+              "text": ")",
+              "start": 148,
+              "end": 149
+            },
+            {
+              "kind": "ws",
+              "text": "\n  ",
+              "start": 149,
+              "end": 152
+            },
+            {
+              "kind": "lparen",
+              "text": "(",
+              "start": 152,
+              "end": 153
+            },
+            {
+              "kind": "sym",
+              "text": "span",
+              "start": 153,
+              "end": 157
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 157,
+              "end": 158
+            },
+            {
+              "kind": "string",
+              "text": "\"cache\"",
+              "start": 158,
+              "end": 165
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 165,
+              "end": 166
+            },
+            {
+              "kind": "string",
+              "text": "\"cache.get.v2\"",
+              "start": 166,
+              "end": 180
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 180,
+              "end": 181
+            },
+            {
+              "kind": "number",
+              "text": "7600",
+              "start": 181,
+              "end": 185
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 185,
+              "end": 186
+            },
+            {
+              "kind": "number",
+              "text": "90",
+              "start": 186,
+              "end": 188
+            },
+            {
+              "kind": "ws",
+              "text": "\n  ",
+              "start": 188,
+              "end": 191
+            },
+            {
+              "kind": "rparen",
+              "text": ")",
+              "start": 191,
+              "end": 192
+            },
+            {
+              "kind": "ws",
+              "text": "\n  ",
+              "start": 192,
+              "end": 195
+            },
+            {
+              "kind": "lparen",
+              "text": "(",
+              "start": 195,
+              "end": 196
+            },
+            {
+              "kind": "sym",
+              "text": "span",
+              "start": 196,
+              "end": 200
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 200,
+              "end": 201
+            },
+            {
+              "kind": "string",
+              "text": "\"retry\"",
+              "start": 201,
+              "end": 208
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 208,
+              "end": 209
+            },
+            {
+              "kind": "string",
+              "text": "\"db.retry\"",
+              "start": 209,
+              "end": 219
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 219,
+              "end": 220
+            },
+            {
+              "kind": "number",
+              "text": "7700",
+              "start": 220,
+              "end": 224
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 224,
+              "end": 225
+            },
+            {
+              "kind": "number",
+              "text": "310",
+              "start": 225,
+              "end": 228
+            },
+            {
+              "kind": "ws",
+              "text": "\n  ",
+              "start": 228,
+              "end": 231
+            },
+            {
+              "kind": "rparen",
+              "text": ")",
+              "start": 231,
+              "end": 232
+            },
+            {
+              "kind": "ws",
+              "text": "\n  ",
+              "start": 232,
+              "end": 235
+            },
+            {
+              "kind": "lparen",
+              "text": "(",
+              "start": 235,
+              "end": 236
+            },
+            {
+              "kind": "sym",
+              "text": "span",
+              "start": 236,
+              "end": 240
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 240,
+              "end": 241
+            },
+            {
+              "kind": "string",
+              "text": "\"render\"",
+              "start": 241,
+              "end": 249
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 249,
+              "end": 250
+            },
+            {
+              "kind": "string",
+              "text": "\"view.render\"",
+              "start": 250,
+              "end": 263
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 263,
+              "end": 264
+            },
+            {
+              "kind": "number",
+              "text": "8000",
+              "start": 264,
+              "end": 268
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 268,
+              "end": 269
+            },
+            {
+              "kind": "number",
+              "text": "6200",
+              "start": 269,
+              "end": 273
+            },
+            {
+              "kind": "ws",
+              "text": "\n  ",
+              "start": 273,
+              "end": 276
+            },
+            {
+              "kind": "rparen",
+              "text": ")",
+              "start": 276,
+              "end": 277
+            },
+            {
+              "kind": "ws",
+              "text": "\n",
+              "start": 277,
+              "end": 278
+            },
+            {
+              "kind": "rparen",
+              "text": ")",
+              "start": 278,
+              "end": 279
+            },
+            {
+              "kind": "ws",
+              "text": "\n",
+              "start": 279,
+              "end": 280
+            },
+            {
+              "kind": "rparen",
+              "text": ")",
+              "start": 280,
+              "end": 281
+            }
+          ]
+        },
+        "significantCount": {
+          "base": 42,
+          "head": 49
+        },
+        "report": {
+          "base": {
+            "trace_id": "run-a",
+            "label": "before deploy",
+            "span_count": 5,
+            "byte_length": 240,
+            "token_count": 76,
+            "significant_count": 42,
+            "lossless": true
+          },
+          "head": {
+            "trace_id": "run-a",
+            "label": "after deploy",
+            "span_count": 6,
+            "byte_length": 281,
+            "token_count": 89,
+            "significant_count": 49,
+            "lossless": true
+          },
+          "stats": {
+            "total_rows": 6,
+            "added": 1,
+            "removed": 0,
+            "renamed": 1,
+            "depth_shifted": 0,
+            "duration_regressed": 1,
+            "duration_improved": 0,
+            "reordered": 0,
+            "unchanged": 0,
+            "orphans": 0
+          },
+          "rows": [
+            {
+              "span_id": "root",
+              "name": "http.handle",
+              "depth": 0,
+              "status": "duration_changed",
+              "flags": ["duration_changed"],
+              "base_dur_ns": 12000,
+              "head_dur_ns": 14500,
+              "delta_ns": 2500,
+              "delta_bps": 2083,
+              "base_depth": 0
+            },
+            {
+              "span_id": "auth",
+              "name": "auth.verify",
+              "depth": 1,
+              "status": "duration_changed",
+              "flags": ["duration_changed"],
+              "base_dur_ns": 900,
+              "head_dur_ns": 950,
+              "delta_ns": 50,
+              "delta_bps": 555,
+              "base_depth": 1
+            },
+            {
+              "span_id": "query",
+              "name": "db.query",
+              "depth": 1,
+              "status": "duration_regressed",
+              "flags": ["duration_regressed"],
+              "base_dur_ns": 3000,
+              "head_dur_ns": 6400,
+              "delta_ns": 3400,
+              "delta_bps": 11333,
+              "base_depth": 1
+            },
+            {
+              "span_id": "cache",
+              "name": "cache.get.v2",
+              "depth": 1,
+              "status": "renamed",
+              "flags": ["renamed", "duration_improved"],
+              "base_dur_ns": 240,
+              "head_dur_ns": 90,
+              "delta_ns": -150,
+              "delta_bps": -6250,
+              "base_depth": 1
+            },
+            {
+              "span_id": "retry",
+              "name": "db.retry",
+              "depth": 1,
+              "status": "added",
+              "flags": ["added"],
+              "base_dur_ns": null,
+              "head_dur_ns": 310,
+              "delta_ns": null,
+              "delta_bps": null,
+              "base_depth": null
+            },
+            {
+              "span_id": "render",
+              "name": "view.render",
+              "depth": 1,
+              "status": "duration_changed",
+              "flags": ["duration_changed"],
+              "base_dur_ns": 6800,
+              "head_dur_ns": 6200,
+              "delta_ns": -600,
+              "delta_bps": -883,
+              "base_depth": 1
+            }
+          ],
+          "column_deltas": [
+            {
+              "column": "span_id",
+              "added": 1,
+              "removed": 0,
+              "changed": 0,
+              "unchanged": 5
+            },
+            {
+              "column": "parent_id",
+              "added": 1,
+              "removed": 0,
+              "changed": 0,
+              "unchanged": 5
+            },
+            {
+              "column": "name",
+              "added": 1,
+              "removed": 0,
+              "changed": 1,
+              "unchanged": 4
+            },
+            {
+              "column": "start_ns",
+              "added": 1,
+              "removed": 0,
+              "changed": 2,
+              "unchanged": 3
+            },
+            {
+              "column": "dur_ns",
+              "added": 1,
+              "removed": 0,
+              "changed": 5,
+              "unchanged": 0
+            },
+            {
+              "column": "depth",
+              "added": 1,
+              "removed": 0,
+              "changed": 0,
+              "unchanged": 5
+            }
+          ],
+          "hunks": [
+            {
+              "op": "equal",
+              "base_start": 0,
+              "base_len": 3,
+              "head_start": 0,
+              "head_len": 3,
+              "tokens": ["(", "trace", "\"run-a\""]
+            },
+            {
+              "op": "delete",
+              "base_start": 3,
+              "base_len": 2,
+              "head_start": -1,
+              "head_len": 0,
+              "tokens": ["\"before deploy\"", "5"]
+            },
+            {
+              "op": "insert",
+              "base_start": -1,
+              "base_len": 0,
+              "head_start": 3,
+              "head_len": 2,
+              "tokens": ["\"after deploy\"", "6"]
+            },
+            {
+              "op": "equal",
+              "base_start": 5,
+              "base_len": 6,
+              "head_start": 5,
+              "head_len": 6,
+              "tokens": [")", "(", "span", "\"root\"", "\"http.handle\"", "0"]
+            },
+            {
+              "op": "delete",
+              "base_start": 11,
+              "base_len": 1,
+              "head_start": -1,
+              "head_len": 0,
+              "tokens": ["12000"]
+            },
+            {
+              "op": "insert",
+              "base_start": -1,
+              "base_len": 0,
+              "head_start": 11,
+              "head_len": 1,
+              "tokens": ["14500"]
+            },
+            {
+              "op": "equal",
+              "base_start": 12,
+              "base_len": 5,
+              "head_start": 12,
+              "head_len": 5,
+              "tokens": ["(", "span", "\"auth\"", "\"auth.verify\"", "120"]
+            },
+            {
+              "op": "delete",
+              "base_start": 17,
+              "base_len": 1,
+              "head_start": -1,
+              "head_len": 0,
+              "tokens": ["900"]
+            },
+            {
+              "op": "insert",
+              "base_start": -1,
+              "base_len": 0,
+              "head_start": 17,
+              "head_len": 1,
+              "tokens": ["950"]
+            },
+            {
+              "op": "equal",
+              "base_start": 18,
+              "base_len": 6,
+              "head_start": 18,
+              "head_len": 6,
+              "tokens": [")", "(", "span", "\"query\"", "\"db.query\"", "1100"]
+            },
+            {
+              "op": "delete",
+              "base_start": 24,
+              "base_len": 1,
+              "head_start": -1,
+              "head_len": 0,
+              "tokens": ["3000"]
+            },
+            {
+              "op": "insert",
+              "base_start": -1,
+              "base_len": 0,
+              "head_start": 24,
+              "head_len": 1,
+              "tokens": ["6400"]
+            },
+            {
+              "op": "equal",
+              "base_start": 25,
+              "base_len": 4,
+              "head_start": 25,
+              "head_len": 4,
+              "tokens": [")", "(", "span", "\"cache\""]
+            },
+            {
+              "op": "insert",
+              "base_start": -1,
+              "base_len": 0,
+              "head_start": 29,
+              "head_len": 10,
+              "tokens": [
+                "\"cache.get.v2\"",
+                "7600",
+                "90",
+                ")",
+                "(",
+                "span",
+                "\"retry\"",
+                "\"db.retry\"",
+                "7700",
+                "310"
+              ]
+            },
+            {
+              "op": "delete",
+              "base_start": 29,
+              "base_len": 3,
+              "head_start": -1,
+              "head_len": 0,
+              "tokens": ["\"cache.get\"", "4200", "240"]
+            },
+            {
+              "op": "equal",
+              "base_start": 32,
+              "base_len": 5,
+              "head_start": 39,
+              "head_len": 5,
+              "tokens": [")", "(", "span", "\"render\"", "\"view.render\""]
+            },
+            {
+              "op": "delete",
+              "base_start": 37,
+              "base_len": 1,
+              "head_start": -1,
+              "head_len": 0,
+              "tokens": ["4600"]
+            },
+            {
+              "op": "insert",
+              "base_start": -1,
+              "base_len": 0,
+              "head_start": 44,
+              "head_len": 2,
+              "tokens": ["8000", "6200"]
+            },
+            {
+              "op": "delete",
+              "base_start": 38,
+              "base_len": 1,
+              "head_start": -1,
+              "head_len": 0,
+              "tokens": ["6800"]
+            },
+            {
+              "op": "equal",
+              "base_start": 39,
+              "base_len": 3,
+              "head_start": 46,
+              "head_len": 3,
+              "tokens": [")", ")", ")"]
+            }
+          ],
+          "edit_cost": 27,
+          "roundtrip": {
+            "base_verified": true,
+            "head_verified": true,
+            "lossless": true
+          }
+        },
+        "container": {
+          "base": "FLDC1\ntrace \"run-a\"\nlabel \"before deploy\"\nspans 5\ncolumns 6\nspan_id str 5\n\"root\"\t\"auth\"\t\"query\"\t\"cache\"\t\"render\"\nparent_id str 5\n\"\"\t\"root\"\t\"root\"\t\"root\"\t\"root\"\nname str 5\n\"http.handle\"\t\"auth.verify\"\t\"db.query\"\t\"cache.get\"\t\"view.render\"\nstart_ns u64 5\n0\t120\t1100\t4200\t4600\ndur_ns u64 5\n12000\t900\t3000\t240\t6800\ndepth u64 5\n0\t1\t1\t1\t1\n",
+          "head": "FLDC1\ntrace \"run-a\"\nlabel \"after deploy\"\nspans 6\ncolumns 6\nspan_id str 6\n\"root\"\t\"auth\"\t\"query\"\t\"cache\"\t\"retry\"\t\"render\"\nparent_id str 6\n\"\"\t\"root\"\t\"root\"\t\"root\"\t\"root\"\t\"root\"\nname str 6\n\"http.handle\"\t\"auth.verify\"\t\"db.query\"\t\"cache.get.v2\"\t\"db.retry\"\t\"view.render\"\nstart_ns u64 6\n0\t120\t1100\t7600\t7700\t8000\ndur_ns u64 6\n14500\t950\t6400\t90\t310\t6200\ndepth u64 6\n0\t1\t1\t1\t1\t1\n"
+        },
+        "decoded": {
+          "base": {
+            "trace_id": "run-a",
+            "label": "before deploy",
+            "spans": [
+              {
+                "span_id": "root",
+                "parent_id": null,
+                "name": "http.handle",
+                "start_ns": 0,
+                "dur_ns": 12000
+              },
+              {
+                "span_id": "auth",
+                "parent_id": "root",
+                "name": "auth.verify",
+                "start_ns": 120,
+                "dur_ns": 900
+              },
+              {
+                "span_id": "query",
+                "parent_id": "root",
+                "name": "db.query",
+                "start_ns": 1100,
+                "dur_ns": 3000
+              },
+              {
+                "span_id": "cache",
+                "parent_id": "root",
+                "name": "cache.get",
+                "start_ns": 4200,
+                "dur_ns": 240
+              },
+              {
+                "span_id": "render",
+                "parent_id": "root",
+                "name": "view.render",
+                "start_ns": 4600,
+                "dur_ns": 6800
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "removal-and-depth-shift",
+      "input": {
+        "base": {
+          "trace_id": "run-b",
+          "label": "baseline",
+          "spans": [
+            {
+              "span_id": "s0",
+              "parent_id": null,
+              "name": "worker",
+              "start_ns": 0,
+              "dur_ns": 5000
+            },
+            {
+              "span_id": "s1",
+              "parent_id": "s0",
+              "name": "parse",
+              "start_ns": 10,
+              "dur_ns": 400
+            },
+            {
+              "span_id": "s2",
+              "parent_id": "s0",
+              "name": "compile",
+              "start_ns": 20,
+              "dur_ns": 900
+            },
+            {
+              "span_id": "s3",
+              "parent_id": "s1",
+              "name": "emit",
+              "start_ns": 30,
+              "dur_ns": 120
+            }
+          ]
+        },
+        "head": {
+          "trace_id": "run-b",
+          "label": "candidate",
+          "spans": [
+            {
+              "span_id": "s0",
+              "parent_id": null,
+              "name": "worker",
+              "start_ns": 0,
+              "dur_ns": 5100
+            },
+            {
+              "span_id": "s1",
+              "parent_id": "s0",
+              "name": "parse",
+              "start_ns": 10,
+              "dur_ns": 420
+            },
+            {
+              "span_id": "s2",
+              "parent_id": "s0",
+              "name": "compile",
+              "start_ns": 20,
+              "dur_ns": 3600
+            }
+          ]
+        }
+      },
+      "expected": {
+        "canonical": {
+          "base": "(trace \"run-b\" \"baseline\" 4)\n(span \"s0\" \"worker\" 0 5000\n  (span \"s1\" \"parse\" 10 400\n    (span \"s3\" \"emit\" 30 120\n    )\n  )\n  (span \"s2\" \"compile\" 20 900\n  )\n)\n)",
+          "head": "(trace \"run-b\" \"candidate\" 3)\n(span \"s0\" \"worker\" 0 5100\n  (span \"s1\" \"parse\" 10 420\n  )\n  (span \"s2\" \"compile\" 20 3600\n  )\n)\n)"
+        },
+        "tokens": {
+          "base": [
+            {
+              "kind": "lparen",
+              "text": "(",
+              "start": 0,
+              "end": 1
+            },
+            {
+              "kind": "sym",
+              "text": "trace",
+              "start": 1,
+              "end": 6
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 6,
+              "end": 7
+            },
+            {
+              "kind": "string",
+              "text": "\"run-b\"",
+              "start": 7,
+              "end": 14
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 14,
+              "end": 15
+            },
+            {
+              "kind": "string",
+              "text": "\"baseline\"",
+              "start": 15,
+              "end": 25
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 25,
+              "end": 26
+            },
+            {
+              "kind": "number",
+              "text": "4",
+              "start": 26,
+              "end": 27
+            },
+            {
+              "kind": "rparen",
+              "text": ")",
+              "start": 27,
+              "end": 28
+            },
+            {
+              "kind": "ws",
+              "text": "\n",
+              "start": 28,
+              "end": 29
+            },
+            {
+              "kind": "lparen",
+              "text": "(",
+              "start": 29,
+              "end": 30
+            },
+            {
+              "kind": "sym",
+              "text": "span",
+              "start": 30,
+              "end": 34
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 34,
+              "end": 35
+            },
+            {
+              "kind": "string",
+              "text": "\"s0\"",
+              "start": 35,
+              "end": 39
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 39,
+              "end": 40
+            },
+            {
+              "kind": "string",
+              "text": "\"worker\"",
+              "start": 40,
+              "end": 48
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 48,
+              "end": 49
+            },
+            {
+              "kind": "number",
+              "text": "0",
+              "start": 49,
+              "end": 50
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 50,
+              "end": 51
+            },
+            {
+              "kind": "number",
+              "text": "5000",
+              "start": 51,
+              "end": 55
+            },
+            {
+              "kind": "ws",
+              "text": "\n  ",
+              "start": 55,
+              "end": 58
+            },
+            {
+              "kind": "lparen",
+              "text": "(",
+              "start": 58,
+              "end": 59
+            },
+            {
+              "kind": "sym",
+              "text": "span",
+              "start": 59,
+              "end": 63
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 63,
+              "end": 64
+            },
+            {
+              "kind": "string",
+              "text": "\"s1\"",
+              "start": 64,
+              "end": 68
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 68,
+              "end": 69
+            },
+            {
+              "kind": "string",
+              "text": "\"parse\"",
+              "start": 69,
+              "end": 76
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 76,
+              "end": 77
+            },
+            {
+              "kind": "number",
+              "text": "10",
+              "start": 77,
+              "end": 79
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 79,
+              "end": 80
+            },
+            {
+              "kind": "number",
+              "text": "400",
+              "start": 80,
+              "end": 83
+            },
+            {
+              "kind": "ws",
+              "text": "\n    ",
+              "start": 83,
+              "end": 88
+            },
+            {
+              "kind": "lparen",
+              "text": "(",
+              "start": 88,
+              "end": 89
+            },
+            {
+              "kind": "sym",
+              "text": "span",
+              "start": 89,
+              "end": 93
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 93,
+              "end": 94
+            },
+            {
+              "kind": "string",
+              "text": "\"s3\"",
+              "start": 94,
+              "end": 98
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 98,
+              "end": 99
+            },
+            {
+              "kind": "string",
+              "text": "\"emit\"",
+              "start": 99,
+              "end": 105
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 105,
+              "end": 106
+            },
+            {
+              "kind": "number",
+              "text": "30",
+              "start": 106,
+              "end": 108
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 108,
+              "end": 109
+            },
+            {
+              "kind": "number",
+              "text": "120",
+              "start": 109,
+              "end": 112
+            },
+            {
+              "kind": "ws",
+              "text": "\n    ",
+              "start": 112,
+              "end": 117
+            },
+            {
+              "kind": "rparen",
+              "text": ")",
+              "start": 117,
+              "end": 118
+            },
+            {
+              "kind": "ws",
+              "text": "\n  ",
+              "start": 118,
+              "end": 121
+            },
+            {
+              "kind": "rparen",
+              "text": ")",
+              "start": 121,
+              "end": 122
+            },
+            {
+              "kind": "ws",
+              "text": "\n  ",
+              "start": 122,
+              "end": 125
+            },
+            {
+              "kind": "lparen",
+              "text": "(",
+              "start": 125,
+              "end": 126
+            },
+            {
+              "kind": "sym",
+              "text": "span",
+              "start": 126,
+              "end": 130
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 130,
+              "end": 131
+            },
+            {
+              "kind": "string",
+              "text": "\"s2\"",
+              "start": 131,
+              "end": 135
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 135,
+              "end": 136
+            },
+            {
+              "kind": "string",
+              "text": "\"compile\"",
+              "start": 136,
+              "end": 145
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 145,
+              "end": 146
+            },
+            {
+              "kind": "number",
+              "text": "20",
+              "start": 146,
+              "end": 148
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 148,
+              "end": 149
+            },
+            {
+              "kind": "number",
+              "text": "900",
+              "start": 149,
+              "end": 152
+            },
+            {
+              "kind": "ws",
+              "text": "\n  ",
+              "start": 152,
+              "end": 155
+            },
+            {
+              "kind": "rparen",
+              "text": ")",
+              "start": 155,
+              "end": 156
+            },
+            {
+              "kind": "ws",
+              "text": "\n",
+              "start": 156,
+              "end": 157
+            },
+            {
+              "kind": "rparen",
+              "text": ")",
+              "start": 157,
+              "end": 158
+            },
+            {
+              "kind": "ws",
+              "text": "\n",
+              "start": 158,
+              "end": 159
+            },
+            {
+              "kind": "rparen",
+              "text": ")",
+              "start": 159,
+              "end": 160
+            }
+          ],
+          "head": [
+            {
+              "kind": "lparen",
+              "text": "(",
+              "start": 0,
+              "end": 1
+            },
+            {
+              "kind": "sym",
+              "text": "trace",
+              "start": 1,
+              "end": 6
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 6,
+              "end": 7
+            },
+            {
+              "kind": "string",
+              "text": "\"run-b\"",
+              "start": 7,
+              "end": 14
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 14,
+              "end": 15
+            },
+            {
+              "kind": "string",
+              "text": "\"candidate\"",
+              "start": 15,
+              "end": 26
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 26,
+              "end": 27
+            },
+            {
+              "kind": "number",
+              "text": "3",
+              "start": 27,
+              "end": 28
+            },
+            {
+              "kind": "rparen",
+              "text": ")",
+              "start": 28,
+              "end": 29
+            },
+            {
+              "kind": "ws",
+              "text": "\n",
+              "start": 29,
+              "end": 30
+            },
+            {
+              "kind": "lparen",
+              "text": "(",
+              "start": 30,
+              "end": 31
+            },
+            {
+              "kind": "sym",
+              "text": "span",
+              "start": 31,
+              "end": 35
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 35,
+              "end": 36
+            },
+            {
+              "kind": "string",
+              "text": "\"s0\"",
+              "start": 36,
+              "end": 40
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 40,
+              "end": 41
+            },
+            {
+              "kind": "string",
+              "text": "\"worker\"",
+              "start": 41,
+              "end": 49
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 49,
+              "end": 50
+            },
+            {
+              "kind": "number",
+              "text": "0",
+              "start": 50,
+              "end": 51
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 51,
+              "end": 52
+            },
+            {
+              "kind": "number",
+              "text": "5100",
+              "start": 52,
+              "end": 56
+            },
+            {
+              "kind": "ws",
+              "text": "\n  ",
+              "start": 56,
+              "end": 59
+            },
+            {
+              "kind": "lparen",
+              "text": "(",
+              "start": 59,
+              "end": 60
+            },
+            {
+              "kind": "sym",
+              "text": "span",
+              "start": 60,
+              "end": 64
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 64,
+              "end": 65
+            },
+            {
+              "kind": "string",
+              "text": "\"s1\"",
+              "start": 65,
+              "end": 69
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 69,
+              "end": 70
+            },
+            {
+              "kind": "string",
+              "text": "\"parse\"",
+              "start": 70,
+              "end": 77
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 77,
+              "end": 78
+            },
+            {
+              "kind": "number",
+              "text": "10",
+              "start": 78,
+              "end": 80
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 80,
+              "end": 81
+            },
+            {
+              "kind": "number",
+              "text": "420",
+              "start": 81,
+              "end": 84
+            },
+            {
+              "kind": "ws",
+              "text": "\n  ",
+              "start": 84,
+              "end": 87
+            },
+            {
+              "kind": "rparen",
+              "text": ")",
+              "start": 87,
+              "end": 88
+            },
+            {
+              "kind": "ws",
+              "text": "\n  ",
+              "start": 88,
+              "end": 91
+            },
+            {
+              "kind": "lparen",
+              "text": "(",
+              "start": 91,
+              "end": 92
+            },
+            {
+              "kind": "sym",
+              "text": "span",
+              "start": 92,
+              "end": 96
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 96,
+              "end": 97
+            },
+            {
+              "kind": "string",
+              "text": "\"s2\"",
+              "start": 97,
+              "end": 101
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 101,
+              "end": 102
+            },
+            {
+              "kind": "string",
+              "text": "\"compile\"",
+              "start": 102,
+              "end": 111
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 111,
+              "end": 112
+            },
+            {
+              "kind": "number",
+              "text": "20",
+              "start": 112,
+              "end": 114
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 114,
+              "end": 115
+            },
+            {
+              "kind": "number",
+              "text": "3600",
+              "start": 115,
+              "end": 119
+            },
+            {
+              "kind": "ws",
+              "text": "\n  ",
+              "start": 119,
+              "end": 122
+            },
+            {
+              "kind": "rparen",
+              "text": ")",
+              "start": 122,
+              "end": 123
+            },
+            {
+              "kind": "ws",
+              "text": "\n",
+              "start": 123,
+              "end": 124
+            },
+            {
+              "kind": "rparen",
+              "text": ")",
+              "start": 124,
+              "end": 125
+            },
+            {
+              "kind": "ws",
+              "text": "\n",
+              "start": 125,
+              "end": 126
+            },
+            {
+              "kind": "rparen",
+              "text": ")",
+              "start": 126,
+              "end": 127
+            }
+          ]
+        },
+        "significantCount": {
+          "base": 35,
+          "head": 28
+        },
+        "report": {
+          "base": {
+            "trace_id": "run-b",
+            "label": "baseline",
+            "span_count": 4,
+            "byte_length": 160,
+            "token_count": 63,
+            "significant_count": 35,
+            "lossless": true
+          },
+          "head": {
+            "trace_id": "run-b",
+            "label": "candidate",
+            "span_count": 3,
+            "byte_length": 127,
+            "token_count": 50,
+            "significant_count": 28,
+            "lossless": true
+          },
+          "stats": {
+            "total_rows": 4,
+            "added": 0,
+            "removed": 1,
+            "renamed": 0,
+            "depth_shifted": 0,
+            "duration_regressed": 1,
+            "duration_improved": 0,
+            "reordered": 0,
+            "unchanged": 0,
+            "orphans": 0
+          },
+          "rows": [
+            {
+              "span_id": "s0",
+              "name": "worker",
+              "depth": 0,
+              "status": "duration_changed",
+              "flags": ["duration_changed"],
+              "base_dur_ns": 5000,
+              "head_dur_ns": 5100,
+              "delta_ns": 100,
+              "delta_bps": 200,
+              "base_depth": 0
+            },
+            {
+              "span_id": "s1",
+              "name": "parse",
+              "depth": 1,
+              "status": "duration_changed",
+              "flags": ["duration_changed"],
+              "base_dur_ns": 400,
+              "head_dur_ns": 420,
+              "delta_ns": 20,
+              "delta_bps": 500,
+              "base_depth": 1
+            },
+            {
+              "span_id": "s3",
+              "name": "emit",
+              "depth": 2,
+              "status": "removed",
+              "flags": ["removed"],
+              "base_dur_ns": 120,
+              "head_dur_ns": null,
+              "delta_ns": null,
+              "delta_bps": null,
+              "base_depth": 2
+            },
+            {
+              "span_id": "s2",
+              "name": "compile",
+              "depth": 1,
+              "status": "duration_regressed",
+              "flags": ["duration_regressed"],
+              "base_dur_ns": 900,
+              "head_dur_ns": 3600,
+              "delta_ns": 2700,
+              "delta_bps": 30000,
+              "base_depth": 1
+            }
+          ],
+          "column_deltas": [
+            {
+              "column": "span_id",
+              "added": 0,
+              "removed": 1,
+              "changed": 0,
+              "unchanged": 3
+            },
+            {
+              "column": "parent_id",
+              "added": 0,
+              "removed": 1,
+              "changed": 0,
+              "unchanged": 3
+            },
+            {
+              "column": "name",
+              "added": 0,
+              "removed": 1,
+              "changed": 0,
+              "unchanged": 3
+            },
+            {
+              "column": "start_ns",
+              "added": 0,
+              "removed": 1,
+              "changed": 0,
+              "unchanged": 3
+            },
+            {
+              "column": "dur_ns",
+              "added": 0,
+              "removed": 1,
+              "changed": 3,
+              "unchanged": 0
+            },
+            {
+              "column": "depth",
+              "added": 0,
+              "removed": 1,
+              "changed": 0,
+              "unchanged": 3
+            }
+          ],
+          "hunks": [
+            {
+              "op": "equal",
+              "base_start": 0,
+              "base_len": 3,
+              "head_start": 0,
+              "head_len": 3,
+              "tokens": ["(", "trace", "\"run-b\""]
+            },
+            {
+              "op": "insert",
+              "base_start": -1,
+              "base_len": 0,
+              "head_start": 3,
+              "head_len": 2,
+              "tokens": ["\"candidate\"", "3"]
+            },
+            {
+              "op": "delete",
+              "base_start": 3,
+              "base_len": 2,
+              "head_start": -1,
+              "head_len": 0,
+              "tokens": ["\"baseline\"", "4"]
+            },
+            {
+              "op": "equal",
+              "base_start": 5,
+              "base_len": 6,
+              "head_start": 5,
+              "head_len": 6,
+              "tokens": [")", "(", "span", "\"s0\"", "\"worker\"", "0"]
+            },
+            {
+              "op": "insert",
+              "base_start": -1,
+              "base_len": 0,
+              "head_start": 11,
+              "head_len": 1,
+              "tokens": ["5100"]
+            },
+            {
+              "op": "delete",
+              "base_start": 11,
+              "base_len": 1,
+              "head_start": -1,
+              "head_len": 0,
+              "tokens": ["5000"]
+            },
+            {
+              "op": "equal",
+              "base_start": 12,
+              "base_len": 5,
+              "head_start": 12,
+              "head_len": 5,
+              "tokens": ["(", "span", "\"s1\"", "\"parse\"", "10"]
+            },
+            {
+              "op": "delete",
+              "base_start": 17,
+              "base_len": 2,
+              "head_start": -1,
+              "head_len": 0,
+              "tokens": ["400", "("]
+            },
+            {
+              "op": "insert",
+              "base_start": -1,
+              "base_len": 0,
+              "head_start": 17,
+              "head_len": 1,
+              "tokens": ["420"]
+            },
+            {
+              "op": "delete",
+              "base_start": 19,
+              "base_len": 6,
+              "head_start": -1,
+              "head_len": 0,
+              "tokens": ["span", "\"s3\"", "\"emit\"", "30", "120", ")"]
+            },
+            {
+              "op": "equal",
+              "base_start": 25,
+              "base_len": 6,
+              "head_start": 18,
+              "head_len": 6,
+              "tokens": [")", "(", "span", "\"s2\"", "\"compile\"", "20"]
+            },
+            {
+              "op": "delete",
+              "base_start": 31,
+              "base_len": 1,
+              "head_start": -1,
+              "head_len": 0,
+              "tokens": ["900"]
+            },
+            {
+              "op": "insert",
+              "base_start": -1,
+              "base_len": 0,
+              "head_start": 24,
+              "head_len": 1,
+              "tokens": ["3600"]
+            },
+            {
+              "op": "equal",
+              "base_start": 32,
+              "base_len": 3,
+              "head_start": 25,
+              "head_len": 3,
+              "tokens": [")", ")", ")"]
+            }
+          ],
+          "edit_cost": 17,
+          "roundtrip": {
+            "base_verified": true,
+            "head_verified": true,
+            "lossless": true
+          }
+        },
+        "container": {
+          "base": "FLDC1\ntrace \"run-b\"\nlabel \"baseline\"\nspans 4\ncolumns 6\nspan_id str 4\n\"s0\"\t\"s1\"\t\"s3\"\t\"s2\"\nparent_id str 4\n\"\"\t\"s0\"\t\"s1\"\t\"s0\"\nname str 4\n\"worker\"\t\"parse\"\t\"emit\"\t\"compile\"\nstart_ns u64 4\n0\t10\t30\t20\ndur_ns u64 4\n5000\t400\t120\t900\ndepth u64 4\n0\t1\t2\t1\n",
+          "head": "FLDC1\ntrace \"run-b\"\nlabel \"candidate\"\nspans 3\ncolumns 6\nspan_id str 3\n\"s0\"\t\"s1\"\t\"s2\"\nparent_id str 3\n\"\"\t\"s0\"\t\"s0\"\nname str 3\n\"worker\"\t\"parse\"\t\"compile\"\nstart_ns u64 3\n0\t10\t20\ndur_ns u64 3\n5100\t420\t3600\ndepth u64 3\n0\t1\t1\n"
+        },
+        "decoded": {
+          "base": {
+            "trace_id": "run-b",
+            "label": "baseline",
+            "spans": [
+              {
+                "span_id": "s0",
+                "parent_id": null,
+                "name": "worker",
+                "start_ns": 0,
+                "dur_ns": 5000
+              },
+              {
+                "span_id": "s1",
+                "parent_id": "s0",
+                "name": "parse",
+                "start_ns": 10,
+                "dur_ns": 400
+              },
+              {
+                "span_id": "s3",
+                "parent_id": "s1",
+                "name": "emit",
+                "start_ns": 30,
+                "dur_ns": 120
+              },
+              {
+                "span_id": "s2",
+                "parent_id": "s0",
+                "name": "compile",
+                "start_ns": 20,
+                "dur_ns": 900
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "awkward-names-and-empty",
+      "input": {
+        "base": {
+          "trace_id": "run-c",
+          "label": "escapes",
+          "spans": [
+            {
+              "span_id": "only",
+              "parent_id": null,
+              "name": "we \"ird\" name",
+              "start_ns": 0,
+              "dur_ns": 42
+            },
+            {
+              "span_id": "uni",
+              "parent_id": "only",
+              "name": "caf\u00e9",
+              "start_ns": 1,
+              "dur_ns": 7
+            }
+          ]
+        },
+        "head": {
+          "trace_id": "run-c",
+          "label": "escapes",
+          "spans": []
+        }
+      },
+      "expected": {
+        "canonical": {
+          "base": "(trace \"run-c\" \"escapes\" 2)\n(span \"only\" \"we \\\"ird\\\" name\" 0 42\n  (span \"uni\" \"caf\\u00e9\" 1 7\n  )\n)\n)",
+          "head": "(trace \"run-c\" \"escapes\" 0)\n)"
+        },
+        "tokens": {
+          "base": [
+            {
+              "kind": "lparen",
+              "text": "(",
+              "start": 0,
+              "end": 1
+            },
+            {
+              "kind": "sym",
+              "text": "trace",
+              "start": 1,
+              "end": 6
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 6,
+              "end": 7
+            },
+            {
+              "kind": "string",
+              "text": "\"run-c\"",
+              "start": 7,
+              "end": 14
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 14,
+              "end": 15
+            },
+            {
+              "kind": "string",
+              "text": "\"escapes\"",
+              "start": 15,
+              "end": 24
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 24,
+              "end": 25
+            },
+            {
+              "kind": "number",
+              "text": "2",
+              "start": 25,
+              "end": 26
+            },
+            {
+              "kind": "rparen",
+              "text": ")",
+              "start": 26,
+              "end": 27
+            },
+            {
+              "kind": "ws",
+              "text": "\n",
+              "start": 27,
+              "end": 28
+            },
+            {
+              "kind": "lparen",
+              "text": "(",
+              "start": 28,
+              "end": 29
+            },
+            {
+              "kind": "sym",
+              "text": "span",
+              "start": 29,
+              "end": 33
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 33,
+              "end": 34
+            },
+            {
+              "kind": "string",
+              "text": "\"only\"",
+              "start": 34,
+              "end": 40
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 40,
+              "end": 41
+            },
+            {
+              "kind": "string",
+              "text": "\"we \\\"ird\\\" name\"",
+              "start": 41,
+              "end": 58
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 58,
+              "end": 59
+            },
+            {
+              "kind": "number",
+              "text": "0",
+              "start": 59,
+              "end": 60
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 60,
+              "end": 61
+            },
+            {
+              "kind": "number",
+              "text": "42",
+              "start": 61,
+              "end": 63
+            },
+            {
+              "kind": "ws",
+              "text": "\n  ",
+              "start": 63,
+              "end": 66
+            },
+            {
+              "kind": "lparen",
+              "text": "(",
+              "start": 66,
+              "end": 67
+            },
+            {
+              "kind": "sym",
+              "text": "span",
+              "start": 67,
+              "end": 71
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 71,
+              "end": 72
+            },
+            {
+              "kind": "string",
+              "text": "\"uni\"",
+              "start": 72,
+              "end": 77
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 77,
+              "end": 78
+            },
+            {
+              "kind": "string",
+              "text": "\"caf\\u00e9\"",
+              "start": 78,
+              "end": 89
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 89,
+              "end": 90
+            },
+            {
+              "kind": "number",
+              "text": "1",
+              "start": 90,
+              "end": 91
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 91,
+              "end": 92
+            },
+            {
+              "kind": "number",
+              "text": "7",
+              "start": 92,
+              "end": 93
+            },
+            {
+              "kind": "ws",
+              "text": "\n  ",
+              "start": 93,
+              "end": 96
+            },
+            {
+              "kind": "rparen",
+              "text": ")",
+              "start": 96,
+              "end": 97
+            },
+            {
+              "kind": "ws",
+              "text": "\n",
+              "start": 97,
+              "end": 98
+            },
+            {
+              "kind": "rparen",
+              "text": ")",
+              "start": 98,
+              "end": 99
+            },
+            {
+              "kind": "ws",
+              "text": "\n",
+              "start": 99,
+              "end": 100
+            },
+            {
+              "kind": "rparen",
+              "text": ")",
+              "start": 100,
+              "end": 101
+            }
+          ],
+          "head": [
+            {
+              "kind": "lparen",
+              "text": "(",
+              "start": 0,
+              "end": 1
+            },
+            {
+              "kind": "sym",
+              "text": "trace",
+              "start": 1,
+              "end": 6
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 6,
+              "end": 7
+            },
+            {
+              "kind": "string",
+              "text": "\"run-c\"",
+              "start": 7,
+              "end": 14
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 14,
+              "end": 15
+            },
+            {
+              "kind": "string",
+              "text": "\"escapes\"",
+              "start": 15,
+              "end": 24
+            },
+            {
+              "kind": "ws",
+              "text": " ",
+              "start": 24,
+              "end": 25
+            },
+            {
+              "kind": "number",
+              "text": "0",
+              "start": 25,
+              "end": 26
+            },
+            {
+              "kind": "rparen",
+              "text": ")",
+              "start": 26,
+              "end": 27
+            },
+            {
+              "kind": "ws",
+              "text": "\n",
+              "start": 27,
+              "end": 28
+            },
+            {
+              "kind": "rparen",
+              "text": ")",
+              "start": 28,
+              "end": 29
+            }
+          ]
+        },
+        "significantCount": {
+          "base": 21,
+          "head": 7
+        },
+        "report": {
+          "base": {
+            "trace_id": "run-c",
+            "label": "escapes",
+            "span_count": 2,
+            "byte_length": 101,
+            "token_count": 37,
+            "significant_count": 21,
+            "lossless": true
+          },
+          "head": {
+            "trace_id": "run-c",
+            "label": "escapes",
+            "span_count": 0,
+            "byte_length": 29,
+            "token_count": 11,
+            "significant_count": 7,
+            "lossless": true
+          },
+          "stats": {
+            "total_rows": 2,
+            "added": 0,
+            "removed": 2,
+            "renamed": 0,
+            "depth_shifted": 0,
+            "duration_regressed": 0,
+            "duration_improved": 0,
+            "reordered": 0,
+            "unchanged": 0,
+            "orphans": 0
+          },
+          "rows": [
+            {
+              "span_id": "only",
+              "name": "we \"ird\" name",
+              "depth": 0,
+              "status": "removed",
+              "flags": ["removed"],
+              "base_dur_ns": 42,
+              "head_dur_ns": null,
+              "delta_ns": null,
+              "delta_bps": null,
+              "base_depth": 0
+            },
+            {
+              "span_id": "uni",
+              "name": "caf\u00e9",
+              "depth": 1,
+              "status": "removed",
+              "flags": ["removed"],
+              "base_dur_ns": 7,
+              "head_dur_ns": null,
+              "delta_ns": null,
+              "delta_bps": null,
+              "base_depth": 1
+            }
+          ],
+          "column_deltas": [
+            {
+              "column": "span_id",
+              "added": 0,
+              "removed": 2,
+              "changed": 0,
+              "unchanged": 0
+            },
+            {
+              "column": "parent_id",
+              "added": 0,
+              "removed": 2,
+              "changed": 0,
+              "unchanged": 0
+            },
+            {
+              "column": "name",
+              "added": 0,
+              "removed": 2,
+              "changed": 0,
+              "unchanged": 0
+            },
+            {
+              "column": "start_ns",
+              "added": 0,
+              "removed": 2,
+              "changed": 0,
+              "unchanged": 0
+            },
+            {
+              "column": "dur_ns",
+              "added": 0,
+              "removed": 2,
+              "changed": 0,
+              "unchanged": 0
+            },
+            {
+              "column": "depth",
+              "added": 0,
+              "removed": 2,
+              "changed": 0,
+              "unchanged": 0
+            }
+          ],
+          "hunks": [
+            {
+              "op": "equal",
+              "base_start": 0,
+              "base_len": 4,
+              "head_start": 0,
+              "head_len": 4,
+              "tokens": ["(", "trace", "\"run-c\"", "\"escapes\""]
+            },
+            {
+              "op": "delete",
+              "base_start": 4,
+              "base_len": 6,
+              "head_start": -1,
+              "head_len": 0,
+              "tokens": ["2", ")", "(", "span", "\"only\"", "\"we \\\"ird\\\" name\""]
+            },
+            {
+              "op": "equal",
+              "base_start": 10,
+              "base_len": 1,
+              "head_start": 4,
+              "head_len": 1,
+              "tokens": ["0"]
+            },
+            {
+              "op": "delete",
+              "base_start": 11,
+              "base_len": 8,
+              "head_start": -1,
+              "head_len": 0,
+              "tokens": ["42", "(", "span", "\"uni\"", "\"caf\\u00e9\"", "1", "7", ")"]
+            },
+            {
+              "op": "equal",
+              "base_start": 19,
+              "base_len": 2,
+              "head_start": 5,
+              "head_len": 2,
+              "tokens": [")", ")"]
+            }
+          ],
+          "edit_cost": 14,
+          "roundtrip": {
+            "base_verified": true,
+            "head_verified": true,
+            "lossless": true
+          }
+        },
+        "container": {
+          "base": "FLDC1\ntrace \"run-c\"\nlabel \"escapes\"\nspans 2\ncolumns 6\nspan_id str 2\n\"only\"\t\"uni\"\nparent_id str 2\n\"\"\t\"only\"\nname str 2\n\"we \\\"ird\\\" name\"\t\"caf\\u00e9\"\nstart_ns u64 2\n0\t1\ndur_ns u64 2\n42\t7\ndepth u64 2\n0\t1\n",
+          "head": "FLDC1\ntrace \"run-c\"\nlabel \"escapes\"\nspans 0\ncolumns 6\nspan_id str 0\n\nparent_id str 0\n\nname str 0\n\nstart_ns u64 0\n\ndur_ns u64 0\n\ndepth u64 0\n\n"
+        },
+        "decoded": {
+          "base": {
+            "trace_id": "run-c",
+            "label": "escapes",
+            "spans": [
+              {
+                "span_id": "only",
+                "parent_id": null,
+                "name": "we \"ird\" name",
+                "start_ns": 0,
+                "dur_ns": 42
+              },
+              {
+                "span_id": "uni",
+                "parent_id": "only",
+                "name": "caf\u00e9",
+                "start_ns": 1,
+                "dur_ns": 7
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}
