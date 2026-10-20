@@ -10,6 +10,8 @@ span inserted near the top of the tree would report every column below it as cha
 
 from __future__ import annotations
 
+from collections.abc import Mapping
+
 from .model import COLUMNS, ColumnDelta, Trace
 
 _EMPTY = object()
@@ -17,7 +19,8 @@ _EMPTY = object()
 
 def column_deltas(base: Trace, head: Trace) -> list[ColumnDelta]:
     """How each column moved between two recordings. Pure."""
-    from .canonical import depths_of  # local import keeps the module graph acyclic
+    # Local import keeps the module graph acyclic.
+    from .canonical import depths_of  # noqa: PLC0415
 
     base_by_id = {span["span_id"]: span for span in base["spans"]}
     head_by_id = {span["span_id"]: span for span in head["spans"]}
@@ -51,7 +54,7 @@ def column_deltas(base: Trace, head: Trace) -> list[ColumnDelta]:
     return deltas
 
 
-def _value(span: dict[str, object], column: str, depths: dict[str, int]) -> object:
+def _value(span: Mapping[str, object], column: str, depths: dict[str, int]) -> object:
     if column == "span_id":
         return span["span_id"]
     if column == "depth":

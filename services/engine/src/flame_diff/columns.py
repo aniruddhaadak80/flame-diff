@@ -43,7 +43,7 @@ stored depth disagrees — a corrupt file fails loudly instead of rendering a wr
 
 from __future__ import annotations
 
-from typing import Final
+from typing import Final, cast
 
 from .canonical import depths_of, order
 from .escape import escape, unescape
@@ -60,6 +60,11 @@ DTYPE_STR: Final[str] = "str"
 SEPARATOR: Final[str] = "\t"
 
 _DTYPES: Final[frozenset[str]] = frozenset({DTYPE_U64, DTYPE_STR})
+
+#: A header line is a field name and its value.
+_HEADER_PARTS: Final[int] = 2
+#: A column header is a name, a dtype, and a count.
+_COLUMN_HEADER_PARTS: Final[int] = 3
 
 
 def _column_values(trace: Trace) -> dict[str, list[object]]:
@@ -98,7 +103,7 @@ def encode(trace: Trace) -> str:
         if dtype == DTYPE_STR:
             lines.append(SEPARATOR.join(escape(str(cell)) for cell in cells))
         else:
-            lines.append(SEPARATOR.join(str(int(cell)) for cell in cells))  # type: ignore[arg-type]
+            lines.append(SEPARATOR.join(str(cast(int, cell)) for cell in cells))
     return "\n".join(lines) + "\n"
 
 
@@ -123,8 +128,10 @@ def decode(text: str) -> Trace:
             raise EngineError("TRUNCATED", f"missing the {field!r} header")
         parts = lines[cursor].split(" ", 1)
         cursor += 1
-        if len(parts) != 2 or parts[0] != field:
-            raise EngineError("BAD_HEADER", f"expected a {field!r} header, got {lines[cursor - 1]!r}")
+        if len(parts) != _HEADER_PARTS or parts[0] != field:
+            raise EngineError(
+                "BAD_HEADER", f"expected a {field!r} header, got {lines[cursor - 1]!r}"
+            )
         return parts[1]
 
     trace_id = unescape(header("trace"))
@@ -145,7 +152,7 @@ def decode(text: str) -> Trace:
             raise EngineError("TRUNCATED", "container ends before every column is declared")
         parts = lines[cursor].split(" ")
         cursor += 1
-        if len(parts) != 3:
+        if len(parts) != _COLUMN_HEADER_PARTS:
             raise EngineError("BAD_HEADER", f"malformed column header {lines[cursor - 1]!r}")
         name, dtype, raw_count = parts
         if name not in COLUMNS:
@@ -155,7 +162,9 @@ def decode(text: str) -> Trace:
         if dtype not in _DTYPES:
             raise EngineError("UNKNOWN_DTYPE", f"unsupported dtype {dtype!r} for column {name!r}")
         if not raw_count.isdigit():
-            raise EngineError("BAD_HEADER", f"column {name!r} has a non-numeric count {raw_count!r}")
+            raise EngineError(
+                "BAD_HEADER", f"column {name!r} has a non-numeric count {raw_count!r}"
+            )
 
         count = int(raw_count)
         if cursor >= len(lines):
@@ -176,7 +185,9 @@ def decode(text: str) -> Trace:
         columns[name] = [_cell(dtype, cell, name) for cell in cells]
 
     if cursor != len(lines):
-        raise EngineError("TRAILING_DATA", f"{len(lines) - cursor} unread line(s) after the columns")
+        raise EngineError(
+            "TRAILING_DATA", f"{len(lines) - cursor} unread line(s) after the columns"
+        )
 
     spans = _spans_from(columns)
     trace: Trace = {"trace_id": trace_id, "label": label, "spans": spans}
@@ -188,7 +199,9 @@ def _cell(dtype: str, cell: str, column: str) -> object:
     if dtype == DTYPE_STR:
         return unescape(cell)
     if not cell.isdigit():
-        raise EngineError("BAD_CELL", f"column {column!r} expects an unsigned integer, got {cell!r}")
+        raise EngineError(
+            "BAD_CELL", f"column {column!r} expects an unsigned integer, got {cell!r}"
+        )
     return int(cell)
 
 
@@ -196,8 +209,8 @@ def _spans_from(columns: dict[str, list[object]]) -> list[Span]:
     ids = [str(value) for value in columns["span_id"]]
     parents = [str(value) for value in columns["parent_id"]]
     names = [str(value) for value in columns["name"]]
-    starts = [int(value) for value in columns["start_ns"]]
-    durations = [int(value) for value in columns["dur_ns"]]
+    starts = [cast(int, value) for value in columns["start_ns"]]
+    durations = [cast(int, value) for value in columns["dur_ns"]]
 
     if len({*ids}) != len(ids):
         raise EngineError("DUPLICATE_SPAN_ID", "span_id column has a repeated value")
@@ -227,9 +240,9 @@ def _assert_depth_agrees(trace: Trace, stored: list[object]) -> None:
     """A container whose stored depth contradicts its own tree is corrupt; say so."""
     derived = depths_of(trace["spans"])
     for index, span in enumerate(trace["spans"]):
-        if derived[span["span_id"]] != int(stored[index]):  # type: ignore[arg-type]
+        if derived[span["span_id"]] != cast(int, stored[index]):
             raise EngineError(
                 "DEPTH_MISMATCH",
-                f"column depth says {int(stored[index])} for span {span['span_id']!r}, "  # type: ignore[arg-type]
+                f"column depth says {cast(int, stored[index])} for span {span['span_id']!r}, "
                 f"but the tree says {derived[span['span_id']]}",
             )

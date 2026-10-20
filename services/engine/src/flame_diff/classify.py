@@ -120,7 +120,7 @@ def classify(
     base_paths = paths(base)
 
     removed = sorted(
-        ((base_paths[span_id], span_id) for span_id in order(base) if span_id not in head_by_id)
+        (base_paths[span_id], span_id) for span_id in order(base) if span_id not in head_by_id
     )
 
     rows: list[Row] = []
@@ -150,8 +150,8 @@ def classify(
                 head_by_id[span_id],
                 base_depths.get(span_id),
                 head_depths[span_id],
-base_ordinals.get(span_id),
-                    head_ordinals.get(span_id),
+                base_ordinals.get(span_id),
+                head_ordinals.get(span_id),
                 regression_ratio,
                 min_duration_ns,
             )
@@ -183,7 +183,7 @@ def _row(
     base_depth: int | None,
     head_depth: int,
     base_ordinal: int | None,
-    head_ordinal: int,
+    head_ordinal: int | None,
     regression_ratio: float,
     min_duration_ns: int,
 ) -> Row:

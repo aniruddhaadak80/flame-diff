@@ -25,6 +25,15 @@ _SIMPLE_ESCAPES: dict[str, str] = {
 
 _HEX = "0123456789abcdef"
 
+#: Printable ASCII range left unescaped, and the bounds of the `\uXXXX` form.
+_PRINTABLE_MIN = 0x20
+_PRINTABLE_MAX = 0x7E
+_QUOTED_MIN_LEN = 2
+_UNICODE_DIGITS = 4
+_SURROGATE_MIN = 0xD800
+_SURROGATE_MAX = 0xDFFF
+_MAX_CODE_POINT = 0x10FFFF
+
 
 def escape(value: str) -> str:
     """Return `value` wrapped in quotes, ASCII-safe and whitespace-free."""
@@ -35,7 +44,7 @@ def escape(value: str) -> str:
             out.append(simple)
             continue
         point = ord(character)
-        if 0x20 <= point <= 0x7E:
+        if _PRINTABLE_MIN <= point <= _PRINTABLE_MAX:
             out.append(character)
             continue
         out.append("\\u")
@@ -50,7 +59,7 @@ def escape(value: str) -> str:
 def unescape(token: str) -> str:
     """Inverse of `escape`. Raises on an unterminated string, a dangling escape, or a
     malformed \\uXXXX."""
-    if len(token) < 2 or token[0] != '"' or token[-1] != '"':
+    if len(token) < _QUOTED_MIN_LEN or token[0] != '"' or token[-1] != '"':
         raise EngineError("BAD_TOKEN", f"expected a quoted string, got {token!r}")
 
     out: list[str] = []
@@ -77,12 +86,12 @@ def unescape(token: str) -> str:
         if following != "u":
             raise EngineError("BAD_TOKEN", f"unknown escape \\{following} in {token!r}")
         digits = token[index + 1 : index + 5]
-        if len(digits) != 4 or any(digit not in _HEX for digit in digits):
+        if len(digits) != _UNICODE_DIGITS or any(digit not in _HEX for digit in digits):
             raise EngineError("BAD_TOKEN", f"malformed \\u escape in {token!r}")
         point = int(digits, 16)
-        if point >= 0xD800 and point <= 0xDFFF:
+        if _SURROGATE_MIN <= point <= _SURROGATE_MAX:
             raise EngineError("BAD_TOKEN", f"lone surrogate escape in {token!r}")
-        if point > 0x10FFFF:
+        if point > _MAX_CODE_POINT:
             raise EngineError("BAD_TOKEN", f"escape out of range in {token!r}")
         out.append(chr(point))
         index += 5

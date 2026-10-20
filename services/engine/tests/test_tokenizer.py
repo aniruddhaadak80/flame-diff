@@ -40,7 +40,7 @@ class TestRoundTrip:
     def test_verify_roundtrip_reports_the_verdict(self) -> None:
         probe = verify_roundtrip('(span "a" 0 1)')
         assert probe["lossless"] is True
-        assert probe["byte_length"] == len('(span "a" 0 1)'.encode())
+        assert probe["byte_length"] == len(b'(span "a" 0 1)')
 
 
 class TestTokenKinds:

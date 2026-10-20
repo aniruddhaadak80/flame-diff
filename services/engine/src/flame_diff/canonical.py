@@ -133,16 +133,16 @@ def order(trace: Trace) -> list[str]:
     return [node.span["span_id"] for node in walk(trace)[0]]
 
 
-def paths(trace: Trace) -> dict[str, tuple[tuple[str, int, str], ...]]:
+def paths(trace: Trace) -> dict[str, tuple[tuple[int, str, str], ...]]:
     """Ancestry path per span id, as a tuple of sort keys from the root down.
 
     Because every step of a path is the same triple used to order siblings, sorting spans
     by path key yields exactly pre-order. That equivalence is what lets the classifier merge
     two recordings with an ordinary sorted merge and still place removals where they belong.
     """
-    result: dict[str, tuple[tuple[str, int, str], ...]] = {}
+    result: dict[str, tuple[tuple[int, str, str], ...]] = {}
     for root in build(trace)[0]:
-        pending = [(root, ())]
+        pending: list[tuple[_Node, tuple[tuple[int, str, str], ...]]] = [(root, ())]
         while pending:
             node, prefix = pending.pop()
             key = (*prefix, _sort_key(node.span))

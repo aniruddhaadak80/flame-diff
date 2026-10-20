@@ -50,7 +50,17 @@ ignore = [
 ]
 
 [tool.ruff.lint.per-file-ignores]
-"tests/*" = ["S101", "PLR2004"]
+# Tests use assert, fixture magic values, and pseudo-random/subprocess helpers for
+# generated-code checks.
+"tests/*" = ["S101", "PLR2004", "S311", "S603", "PLC0415"]
+# The golden generator imports the reference implementation lazily.
+"tools/*" = ["PLC0415"]
+# These single-pass protocol routines are kept whole; splitting them by argument or
+# branch count would make the state machines harder to follow than the warnings are worth.
+"src/flame_diff/classify.py" = ["PLR0913", "PLR0917"]
+"src/flame_diff/columns.py" = ["PLR0912", "PLR0915"]
+"src/flame_diff/edit.py" = ["PLR0912", "PLR0913", "PLR0917"]
+"src/flame_diff/tokenizer.py" = ["PLR0912", "PLR0915"]
 
 [tool.mypy]
 python_version = "3.11"
