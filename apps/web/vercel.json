@@ -3,9 +3,7 @@
   "framework": "nextjs",
   "buildCommand": "cd ../.. && npm run build",
   "installCommand": "cd ../.. && npm ci --include=dev",
-  "regions": [
-    "bom1"
-  ],
+  "regions": ["bom1"],
   "headers": [
     {
       "source": "/(.*)",
